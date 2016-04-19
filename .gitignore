@@ -76,3 +76,18 @@ CMakeLists.txt.user*
 
 
 
+### https://raw.github.com/github/gitignore/0f88fa75def7ed7d96935b8630793e51953df9b0/CMake.gitignore
+
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+
+
+###
+
+build
