@@ -1,4 +1,6 @@
 
+#include <QJsonArray>
+
 #include "life.hpp"
 
 
@@ -20,6 +22,35 @@ void Life::clear()
 {
 	memset(lattice, 0, _width * _height * sizeof(bool));
 	render();
+}
+
+void Life::read(const QJsonObject& json)
+{
+	Q_ASSERT(json["width"] == _width);
+	if(json["width"] != _width)
+		return;
+	Q_ASSERT(json["height"] == _height);
+	if(json["height"] != _height)
+		return;
+
+	QJsonArray l = json["lattice"].toArray();
+	int counter = 0;
+	for(int i = 0; i < _height; i++)
+		for(int j = 0; j < _width; j++)
+			lattice[i][j] = l[counter++].toBool();
+
+	render();
+}
+
+void Life::write(QJsonObject& json) const
+{
+	json["width"]  = _width;
+	json["height"] = _height;
+	QJsonArray l;
+	for(int i = 0; i < _height; i++)
+		for(int j = 0; j < _width; j++)
+			l.append(lattice[i][j]);
+	json["lattice"] = l;
 }
 
 void Life::toggleCell(int x, int y)

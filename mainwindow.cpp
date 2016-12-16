@@ -1,6 +1,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QJsonDocument>
 
 #include "lifeview.hpp"
 #include "mainwindow.hpp"
@@ -72,5 +73,27 @@ void MainWindow::on_actionOpen_triggered()
 		QMessageBox::critical(this, tr("Error"), file.errorString());
 		return;
 	}
-	
+
+	QByteArray data = file.readAll();
+	QJsonDocument document(QJsonDocument::fromJson(data));
+	life->read(document.object());
+}
+
+void MainWindow::on_actionSave_triggered()
+{
+	QString filename = QFileDialog::getSaveFileName(this);
+	if(filename.isEmpty())
+		return;
+
+	QFile file(filename);
+	if(!file.open(QIODevice::WriteOnly))
+	{
+		QMessageBox::critical(this, tr("Error"), file.errorString());
+		return;
+	}
+
+	QJsonObject lifeObject;
+	life->write(lifeObject);
+	QJsonDocument document(lifeObject);
+	file.write(document.toJson());
 }

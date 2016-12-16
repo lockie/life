@@ -30,8 +30,10 @@ private slots:
 	
 	void on_actionStop_triggered();
 	
-    void on_actionOpen_triggered();
-    
+	void on_actionOpen_triggered();
+	
+	void on_actionSave_triggered();
+
 private:
 	Ui::MainWindow *ui;
 	Life* life;

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QJsonObject>
 
 
 const int _width = 50;
@@ -18,6 +19,9 @@ public:
 
 	void setView(QGraphicsView* view);
 	void clear();
+
+	void read(const QJsonObject &json);
+	void write(QJsonObject &json) const;
 
 public slots:
 	void toggleCell(int x, int y);
